@@ -9,6 +9,11 @@ var User = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  username: {
+    type: String,
+    required: true,
+    password: true,
+  },
   name: {
     type: String,
   },
@@ -20,7 +25,7 @@ var User = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  }
+  },
 });
 
 // Allow us to export model to other files (e.x. routes)
