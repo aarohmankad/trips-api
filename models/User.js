@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcryptjs = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
 /**
  * User model
@@ -36,20 +36,8 @@ User.pre('save', function(next) {
     return next();
   }
 
-  bcrypt.genSalt(12, function(err, salt) {
-    if (err) {
-      return next(err);
-    }
-
-    bcrypt.hash(user.password, salt, function(err, hash) {
-      if (err) {
-        return next(err);
-      }
-
-      user.password = hash;
-      next();
-    });
-  });
+  user.password = bcrypt.hashSync(user.password, 12);
+  next();
 });
 
 User.methods.comparePassword = function(password, callback) {
