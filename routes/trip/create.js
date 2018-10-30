@@ -1,13 +1,13 @@
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
   Trip = require('./../../models/Trip');
 
-module.exports = function(router) {
+module.exports = router => {
   // A POST request to /api/trips will
   // create a trip based on request body
-  router.post('/trips', function(req, res) {
-    Trip.create(req.body, function(err, trip) {
+  router.post('/trips', (req, res) => {
+    Trip.create(req.body, (err, trip) => {
       if (err) {
-        return res.send(err);
+        return res.status(500).send(err);
       }
 
       return res.send(trip);

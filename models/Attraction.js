@@ -1,10 +1,10 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 /**
  * Attraction model
  * @type {Schema}
  */
-var Attraction = new mongoose.Schema({
+const Attraction = new mongoose.Schema({
   createdDate: {
     type: Date,
     default: Date.now,

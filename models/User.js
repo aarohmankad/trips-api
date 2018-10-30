@@ -29,7 +29,7 @@ const User = new mongoose.Schema({
   },
 });
 
-User.pre('save', function(next) {
+User.pre('save', next => {
   let user = this;
 
   if (!user.isModified('password')) {
@@ -40,14 +40,13 @@ User.pre('save', function(next) {
   next();
 });
 
-User.methods.comparePassword = function(password, callback) {
-  bcrypt.compare(password, this.password, function(err, isMatch) {
-    if (err) {
-      return callback(err);
-    }
-
-    callback(null, isMatch);
-  });
+User.methods.comparePassword = (password, callback) => {
+  bcrypt
+    .compare(password, this.password)
+    .then(isMatch => {
+      callback(null, isMatch);
+    })
+    .catch(err => callback(err));
 };
 
 // Allow us to export model to other files (e.x. routes)
