@@ -1,7 +1,8 @@
 const maps = require('@google/maps');
 
+const { key } = require('../config/GOOGLE');
 const client = maps.createClient({
-  key: 'AIzaSyDGZMTb_uccDom9FtaJZ1zfxgbajgzOl3A',
+  key,
   Promise,
 });
 
@@ -9,7 +10,7 @@ module.exports = {
   findPlace: input => {
     return client
       .findPlace({
-        input: 'Eiffel Tower',
+        input,
         inputtype: 'textquery',
         fields: [
           'formatted_address',
