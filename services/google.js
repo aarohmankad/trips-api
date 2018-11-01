@@ -1,4 +1,5 @@
 const maps = require('@google/maps');
+const request = require('superagent');
 
 const { key } = require('../config/GOOGLE');
 const client = maps.createClient({
@@ -24,7 +25,22 @@ module.exports = {
       })
       .asPromise()
       .then(response => {
-        return response.json.candidates;
+        const candidates = response.json.candidates;
+        const promises = candidates.map((candidate, index) =>
+          client
+            .placesPhoto({
+              photoreference: candidate.photos[0].photo_reference,
+              maxheight: 400,
+              maxwidth: 400,
+            })
+            .asPromise()
+            .then(photoData => request.get(photoData.requestUrl))
+            .then(
+              data => (candidates[index].populatedPhoto = data.redirects[0])
+            )
+        );
+
+        return Promise.all(promises).then(_ => candidates);
       })
       .catch(console.error);
   },
