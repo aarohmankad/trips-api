@@ -1,10 +1,10 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 /**
  * Trip model
  * @type {Schema}
  */
-var Trip = new mongoose.Schema({
+const Trip = new mongoose.Schema({
   createdDate: {
     type: Date,
     default: Date.now,
