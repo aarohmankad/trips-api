@@ -40,7 +40,7 @@ User.pre('save', next => {
   next();
 });
 
-User.methods.comparePassword = (password, callback) => {
+User.methods.comparePassword = function(password, callback) {
   bcrypt
     .compare(password, this.password)
     .then(isMatch => {

@@ -1,4 +1,6 @@
-const mongoose = require('mongoose'),
+const jwt = require('jsonwebtoken'),
+  JSONWEBTOKEN = require('../../config/JSONWEBTOKEN'),
+  mongoose = require('mongoose'),
   User = require('./../../models/User');
 
 module.exports = router => {
@@ -6,18 +8,17 @@ module.exports = router => {
   // attempt to log in a user based on
   // request body
   router.post('/login', (req, res) => {
-    User.findOne({ email: req.body.email }).then((err, user) => {
-      if (err) {
-        return res.status(500).send(err);
-      }
-
+    User.findOne({ email: req.body.email }).then(user => {
       user.comparePassword(req.body.password, (err, isMatch) => {
         if (err) {
-          return res.send(err);
+          return res.status(500).send(err);
         }
 
         if (isMatch) {
-          res.send('User logged in');
+          return res.send({
+            isMatch,
+            token: jwt.sign({ user }, JSONWEBTOKEN.secret),
+          });
         }
       });
     });
