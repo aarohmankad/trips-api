@@ -29,7 +29,7 @@ const User = new mongoose.Schema({
   },
 });
 
-User.pre('save', next => {
+User.pre('save', function(next) {
   let user = this;
 
   if (!user.isModified('password')) {

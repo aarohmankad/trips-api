@@ -1,4 +1,6 @@
-const mongoose = require('mongoose'),
+const jwt = require('jsonwebtoken'),
+  JSONWEBTOKEN = require('../../config/JSONWEBTOKEN'),
+  mongoose = require('mongoose'),
   User = require('./../../models/User');
 
 module.exports = router => {
@@ -10,7 +12,7 @@ module.exports = router => {
         return res.status(500).send(err);
       }
 
-      return res.send(user);
+      return res.send({ token: jwt.sign({ user }, JSONWEBTOKEN.secret) });
     });
   });
 };
