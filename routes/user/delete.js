@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-
-//Database Mongoose Model
-User = require('../../models/User');
+const jwt = require('jsonwebtoken'),
+  JSONWEBTOKEN = require('../../config/JSONWEBTOKEN'),
+  const mongoose = require('mongoose'),
+  User = require('./../../models/User');
 
 //Delete user by id
 module.exports = function(router) {
@@ -10,7 +10,7 @@ module.exports = function(router) {
         User.deleteOne({ _id: id })
             .exec()
             .then(result => {
-                res.send(result);
+                res.send({ token: jwt.sign({ result }, JSONWEBTOKEN.secret) });
             })
             .catch(err => {
                 res.status(err);

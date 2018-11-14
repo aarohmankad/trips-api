@@ -1,16 +1,16 @@
 const jwt = require('jsonwebtoken'),
   JSONWEBTOKEN = require('../../config/JSONWEBTOKEN'),
   const mongoose = require('mongoose'),
-  User = require('./../../models/User');
+  Trip = require('../../models/Trip');
 
 module.exports = function(router) {
-    router.patch('/users/:userId', (req, res, next) => {
-        const id = req.params.userId;
+    router.put('/trip/:tripId', (req, res, next) => {
+        const id = req.params.tripId;
         const updateOps = {};
         for (const ops of req.body) {
-            updateOps[ops.propName] = ops.value;
+            updateOps[ops.attractionId] = ops.newAttraction;
         }
-        User.updateOne({ _id: id }, { $set: updateOps })
+        Trip.updateOne({ _id: id }, { $push: updateOps })
             .exec()
             .then(result => {
                 res.send({ token: jwt.sign({ result }, JSONWEBTOKEN.secret) });
