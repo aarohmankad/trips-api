@@ -1,4 +1,4 @@
-//TODO: Delete. Used for testing purposes ONLY
+//TODO: Used for testing purposes ONLY
 const jwt = require('jsonwebtoken'),
   JSONWEBTOKEN = require('../../config/JSONWEBTOKEN'),
   const mongoose = require('mongoose'),

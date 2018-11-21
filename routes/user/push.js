@@ -1,19 +1,22 @@
 const jwt = require('jsonwebtoken'),
   JSONWEBTOKEN = require('../../config/JSONWEBTOKEN'),
   const mongoose = require('mongoose'),
-  Attraction = require('../../models/Attraction');
+  User = require('../../models/Trip');
 
-//Delete user by id
 module.exports = function(router) {
-    router.delete('/attraction/:attractionId', (req, res, next) => {
-        const id = req.params.attractionId;
-        Attraction.deleteOne({ _id: id })
+    router.put('/users/:userId', (req, res, next) => {
+        const id = req.params.userId;
+        const updateOps = {};
+        for (const ops of req.body) {
+            updateOps[ops.friendProp] = ops.newFriend;
+        }
+        Trip.updateOne({ _id: id }, { $push: updateOps })
             .exec()
             .then(result => {
                 res.send({ token: jwt.sign({ result }, JSONWEBTOKEN.secret) });
             })
             .catch(err => {
-                res.status(err);
+                res.send(err);
             });
     });
 };
