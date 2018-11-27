@@ -1,7 +1,8 @@
-const express = require('express'),
+const bodyParser = require('body-parser'),
+  cors = require('cors'),
+  express = require('express'),
   mongoose = require('mongoose'),
   app = express(),
-  bodyParser = require('body-parser'),
   // MONGO = require('./keys/mongo');
   port = process.env.PORT || 8000;
 
@@ -12,6 +13,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+app.use(cors());
 
 // Add headers for http requests
 app.use((req, res, next) => {

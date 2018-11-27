@@ -13,9 +13,10 @@
     "@google/maps": "^0.5.5",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "express": "^4.16.3",
-    "jsonwebtoken": "^8.3.0",
     "express-jwt": "^5.3.1",
+    "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.3.2",
     "superagent": "^4.0.0-beta.5"
   }
