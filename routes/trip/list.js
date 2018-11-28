@@ -5,17 +5,9 @@ const jwt = require('express-jwt'),
 
 module.exports = router => {
   router.get('/trips', jwt({ secret }), (req, res) => {
-    Trip.find(
-      {
-        createdBy: req.user.user._id,
-      },
-      (err, trips) => {
-        if (err) {
-          return res.status(500).send(err);
-        }
-
-        return res.send(trips);
-      }
-    );
+    Trip.find({ createdBy: req.user.user._id })
+      .populate('attractions')
+      .then(trips => res.send(trips))
+      .catch(error => res.status(500).send(err));
   });
 };
